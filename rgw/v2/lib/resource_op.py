@@ -97,33 +97,36 @@ class Config(object):
             self.container_count = self.doc['config'].get('container_count')
             self.version_count = self.doc['config'].get('version_count')
             self.local_file_delete = self.doc['config'].get('local_file_delete', False)
-            self.ssl = self.doc['config'].get('ssl',)
-            self.frontend = self.doc['config'].get('frontend')
-            frontend_config = Frontend()
+            self.ssl = self.doc['config'].get('ssl', False)
 
-            # if frontend is set in config yaml
-            if self.frontend:
-                log.info('frontend is set in config.yaml: {}'.format(self.frontend))
-                if self.ssl is None:
-                    # if ssl is not set in config.yaml
-                    log.info('ssl is not set in config.yaml')
-                    self.ssl = frontend_config.curr_ssl
-                # configuring frontend
-                frontend_config.set_frontend(self.frontend, ssl=self.ssl)
+            # commenting for nautilus since ceph.conf is not supported in nautilus
 
-            # if ssl is True or False in config yaml
-            # and if frontend is not set in config yaml,
-            elif self.ssl is not None and not self.frontend:
-                # get the current frontend and add ssl to it.
-                log.info('ssl is set in config.yaml')
-                log.info('frontend is not set in config.yaml')
-                frontend_config.set_frontend(frontend_config.curr_frontend, ssl=self.ssl)
-
-            elif self.ssl is None:
-                # if ssl is not set in config yaml, check if ssl_enabled and configured by default,
-                # set sel.ssl = True or False based on ceph conf
-                log.info('ssl is not set in config.yaml')
-                self.ssl = frontend_config.curr_ssl
+            # self.frontend = self.doc['config'].get('frontend')
+            # frontend_config = Frontend()
+            #
+            # # if frontend is set in config yaml
+            # if self.frontend:
+            #     log.info('frontend is set in config.yaml: {}'.format(self.frontend))
+            #     if self.ssl is None:
+            #         # if ssl is not set in config.yaml
+            #         log.info('ssl is not set in config.yaml')
+            #         self.ssl = frontend_config.curr_ssl
+            #     # configuring frontend
+            #     frontend_config.set_frontend(self.frontend, ssl=self.ssl)
+            #
+            # # if ssl is True or False in config yaml
+            # # and if frontend is not set in config yaml,
+            # elif self.ssl is not None and not self.frontend:
+            #     # get the current frontend and add ssl to it.
+            #     log.info('ssl is set in config.yaml')
+            #     log.info('frontend is not set in config.yaml')
+            #     frontend_config.set_frontend(frontend_config.curr_frontend, ssl=self.ssl)
+            #
+            # elif self.ssl is None:
+            #     # if ssl is not set in config yaml, check if ssl_enabled and configured by default,
+            #     # set sel.ssl = True or False based on ceph conf
+            #     log.info('ssl is not set in config.yaml')
+            #     self.ssl = frontend_config.curr_ssl
 
         except Exception,e:
             log.info(e)
