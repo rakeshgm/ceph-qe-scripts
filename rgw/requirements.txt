@@ -8,4 +8,4 @@ python-swiftclient
 swiftly
 simplejson
 # for v1
-psutil
+
