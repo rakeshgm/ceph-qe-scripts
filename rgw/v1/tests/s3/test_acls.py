@@ -19,6 +19,7 @@ def test_exec_read(config):
     config.bucket_count = 3
     config.objects_count = 3
     config.objects_size_range = {'min': 50, 'max': 100}
+    bug fixed
     """
     grants = {'permission': 'READ', 'user_id': None, 'recursive': True}
     test_info = AddTestInfo('Test with read permission on buckets')
